@@ -157,7 +157,7 @@ export class ParticleManager {
       this.alphas[i] = 1;
       spawned++;
     }
-    if (opts.additive) this.setBlending(true);
+    this.setBlending(!!opts.additive);
     this.markDirty();
   }
 
