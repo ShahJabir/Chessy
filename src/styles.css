@@ -818,6 +818,11 @@ select.sel {
 
 /* -------------------------------------------------------------- fatal */
 
+/* The hidden attribute must win over component layout rules such as flex/grid. */
+[hidden] {
+  display: none !important;
+}
+
 #fatal-error {
   position: absolute;
   inset: 0;
