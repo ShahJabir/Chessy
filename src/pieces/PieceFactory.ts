@@ -25,8 +25,13 @@ function translate(geo: THREE.BufferGeometry, x: number, y: number, z: number): 
 }
 
 function merge(parts: THREE.BufferGeometry[]): THREE.BufferGeometry {
-  const merged = mergeGeometries(parts, false);
+  // mergeGeometries() requires every part to agree on indexed vs
+  // non-indexed. ExtrudeGeometry (knight head) is non-indexed while the
+  // primitives are indexed, so normalize all parts to non-indexed first.
+  const flat = parts.map((p) => (p.index !== null ? p.toNonIndexed() : p));
   parts.forEach((p) => p.dispose());
+  const merged = mergeGeometries(flat, false);
+  flat.forEach((p) => p.dispose());
   if (!merged) throw new Error("geometry merge failed");
   return merged;
 }
