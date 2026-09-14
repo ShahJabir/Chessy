@@ -219,10 +219,37 @@ async function boot(): Promise<void> {
   window.addEventListener("pointerdown", unlock, { once: false });
   window.addEventListener("keydown", unlock, { once: true });
 
+  // --- keyboard shortcuts --------------------------------------------------
+  window.addEventListener("keydown", (e) => {
+    const t = e.target as HTMLElement | null;
+    if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT")) return;
+    if (app.querySelector(".settings-modal")) return;
+    switch (e.key.toLowerCase()) {
+      case "r":
+        arena.resetCamera();
+        break;
+      case "f":
+        if (!screensHost.firstChild) controller.flipBoard();
+        break;
+      case "u":
+        if (!screensHost.firstChild) controller.undo();
+        break;
+      case "escape":
+        arena.cinematic.stop();
+        break;
+    }
+  });
+
   // --- initial state ------------------------------------------------------
   await arena.setTheme(settings.get().defaults.theme);
   arena.syncFromGame(new ChessGame());
   showMenu();
+
+  console.info(
+    "%cCHESS ARENA%c  every move changes the battlefield  ·  R reset camera · F flip · U undo",
+    "font-weight:bold;color:#e0b25a",
+    "color:#9a948a",
+  );
 }
 
 boot().catch((e) => {
