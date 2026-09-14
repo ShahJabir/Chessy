@@ -90,12 +90,15 @@ export class Board3D {
       m.castShadow = true;
       frame.add(m);
     };
-    const ext = 4.5;
+    // Frame hugs the outer square edges (board half-extent = 4).
+    const B = 4.0;
     const th = 0.62;
-    mk(ext * 2 + th, th, 0, -ext - th / 2 + 0.31);
-    mk(ext * 2 + th, th, 0, ext + th / 2 - 0.31);
-    mk(th, ext * 2 - th, -ext - th / 2 + 0.31, 0);
-    mk(th, ext * 2 - th, ext + th / 2 - 0.31, 0);
+    const c = B + th / 2;
+    const span = 2 * (B + th);
+    mk(span, th, 0, -c);
+    mk(span, th, 0, c);
+    mk(th, 2 * B, -c, 0);
+    mk(th, 2 * B, c, 0);
     this.group.add(frame);
 
     // --- Highlight overlays ---------------------------------------------

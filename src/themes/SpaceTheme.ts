@@ -158,13 +158,13 @@ export class SpaceTheme extends ArenaTheme {
       new THREE.CylinderGeometry(7.8, 8.6, 1.1, 28),
       new THREE.MeshStandardMaterial({ color: 0x39455c, roughness: 0.4, metalness: 0.85 }),
     );
-    disc.position.y = -1.1;
+    disc.position.y = -0.8;
     disc.receiveShadow = true;
     this.env.add(disc);
     this.edgeMat = new THREE.MeshBasicMaterial({ color: 0x7df9ff });
     const edge = new THREE.Mesh(new THREE.TorusGeometry(8.2, 0.07, 8, 48), this.edgeMat);
     edge.rotation.x = Math.PI / 2;
-    edge.position.y = -0.62;
+    edge.position.y = -0.5;
     this.env.add(edge);
     // Support pylons underneath.
     for (let i = 0; i < 3; i++) {
